@@ -4,6 +4,7 @@ import native from 'natives';
 import view from './view.js';
 
 const soundList = JSON.parse(alt.File.read('./data/soundNames.json'));
+soundList.sort((a,b) => (a.AudioName > b.AudioName) ? 1 : ((b.AudioName > a.AudioName) ? -1 : 0));
 
 alt.onServer('system:BeginGameplay', function() {
     view.emit('debug:audio:LoadData', soundList);
@@ -28,7 +29,6 @@ view.on('debug:audio:Play', function(name, ref) {
 });
 
 view.on('debug:audio:Close', function() {
-    view.emit('debug:audio:Hide');
     view.unfocus();
     alt.toggleGameControls(true);
     alt.showCursor(false);
